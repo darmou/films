@@ -1,0 +1,11 @@
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+#
+# Examples:
+#
+#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+#   Character.create(name: 'Luke', movie: movies.first)
+Film.create({ title: 'Star Wars', description: 'Star Wars (later retitled Star Wars: Episode IV – A New Hope) is a 1977 American epic space opera film written and directed by George Lucas. The first installment in the Star Wars film series, it stars Mark Hamill, Harrison Ford, Carrie Fisher, Peter Cushing, and Alec Guinness. David Prowse, James Earl Jones, Anthony Daniels, Kenny Baker, and Peter Mayhew co-star in supporting roles.', url_slug: 'star_wars', year: 1977 })
+Film.create({title: 'Return of the Jedi', description: 'Return of the Jedi (also known as Star Wars: Episode VI – Return of the Jedi) is a 1983 American epic space opera film directed by Richard Marquand. The screenplay by Lawrence Kasdan and George Lucas was from a story by Lucas, who was also the executive producer. It was the third and final installment in the original Star Wars trilogy and the first film to use THX technology. The film is set one year after The Empire Strikes Back[9] and was produced by Howard Kazanjian for Lucasfilm Ltd. The film stars Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams, Anthony Daniels, David Prowse, Kenny Baker, Peter Mayhew and Frank Oz.', url_slug: "return_of_the_jedi", year:1983})
+
+Film.create({ title: 'The Fellowship of the Ring ', description: 'The Lord of the Rings: The Fellowship of the Ring is a 2001 epic high fantasy adventure film directed by Peter Jackson based on the first volume of J. R. R. Tolkien\'s The Lord of the Rings (1954–1955). It is the first instalment in The Lord of the Rings series, and was followed by The Two Towers (2002) and The Return of the King (2003), based on the second and third volumes of The Lord of the Rings.', url_slug: 'lotr_fotr' })

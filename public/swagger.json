@@ -1,0 +1,362 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Film API",
+        "description": "List films and be able to sort, filter and submit user ratings for films.",
+        "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/api/v1",
+    "consumes": [
+        "application/vnd.api+json"
+    ],
+    "produces": [
+        "application/vnd.api+json"
+    ],
+    "paths": {
+        "/films": {
+            "get": {
+                "description": "Index all Films",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filter by name, title, year and url-slug",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort by name, title, year and url-slug, description and id",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page%5Bsize%5D",
+                        "in": "query",
+                        "description": "Specify page size",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page%5Bnumber%5D",
+                        "in": "query",
+                        "description": "Specify page number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "fields[films]",
+                        "in": "query",
+                        "description": "Specify the fields to return in the result",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "title": "Films Index",
+                            "type": "object",
+                            "required": [
+                                "data"
+                            ],
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "title": "Film",
+                                        "type": "object",
+                                        "required": [
+                                            "id",
+                                            "type"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "attributes": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "title": {
+                                                        "type": "string"
+                                                    },
+                                                    "favourite-colour": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Add a new film",
+                "description": "",
+                "operationId": "addFilm",
+                "consumes": [
+                    "application/vnd.api+json"
+                ],
+                "produces": [
+                    "application/vnd.api+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "body",
+                        "description": "Title of film to be added",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "body",
+                        "description": "Description of film to be added",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "url-slug",
+                        "in": "body",
+                        "description": "Url slug to find the film",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "year",
+                        "in": "body",
+                        "description": "Year the film was made",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "related_film_ids",
+                        "in": "body",
+                        "description": "Id's of related films",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "id": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "415": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/films/{filmId}/submit_rating": {
+            "post": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Submit a rating for a film",
+                "description": "Multiple status values can be provided with comma separated strings",
+                "produces": [
+                    "application/vnd.api+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "body",
+                        "description": "User id for rating",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "rating",
+                        "in": "body",
+                        "description": "rating",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    },
+                    "404": {
+                        "description": "Could not find film"
+                    }
+                }
+            }
+        },
+        "/films/{filmId}": {
+            "get": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Find film by ID",
+                "description": "Returns a single film",
+                "operationId": "getFilmById",
+                "produces": [
+                    "application/vnd.api+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filmId",
+                        "in": "path",
+                        "description": "ID of film to return",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Film"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Film not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Update a film",
+                "description": "Update a film.",
+                "operationId": "updateFilm",
+                "produces": [
+                    "application/vnd.api+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filmId",
+                        "in": "path",
+                        "description": "id that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated film object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Film"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid film supplied"
+                    },
+                    "404": {
+                        "description": "Film not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Delete film  by ID",
+                "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+                "operationId": "deleteFilm",
+                "produces": [
+                    "application/vnd.api+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filmId",
+                        "in": "path",
+                        "description": "ID of the order that needs to be deleted",
+                        "required": true,
+                        "type": "integer",
+                        "minimum": 1,
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Film not found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Film": {
+            "type": "object",
+            "required": [
+                "title",
+                "description",
+                "url-slug"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 2
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Star Wars"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Star Wars is a film created in 1977."
+                },
+                "year": {
+                    "type": "integer",
+                    "example": "1977."
+                },
+                "average-rating": {
+                    "type": "float",
+                    "example": "4.4"
+                },
+                "url-slug": {
+                    "type": "string",
+                    "example": "lotr"
+                },
+                "related_film_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": "[3,2]"
+                }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}
