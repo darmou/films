@@ -4,22 +4,12 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore bundler config.
-/.bundle
+
+
 
 #Ignore node modules
 swagger-ui/node_modules
 .idea
-
-# Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
-
-# Ignore Byebug command history file.
-.byebug_history
-
 
 *.rbc
 capybara-*.html
@@ -61,3 +51,8 @@ bower.json
 # Ignore pow environment settings
 .powenv
 
+<<<<<<< HEAD
+=======
+# Ignore Byebug command history file.
+.byebug_history
+>>>>>>> d88d2aa11395ac9018707190f6c122b1ea588c42
